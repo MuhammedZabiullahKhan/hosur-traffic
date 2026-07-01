@@ -3,7 +3,9 @@
 // Created by Shri Muhammed Zabiullah Khan @Axion_Z_Squad
 // ============================================================
 
-const API_BASE = 'https://hosur-traffic.onrender.com/api';
+// ✅ FIXED: Use your Render backend URL
+const API_BASE = 'https://hosur-traffic.onrender.com';
+
 let currentData = null;
 let updateInterval = null;
 let audioCtx = null;
@@ -144,7 +146,6 @@ const flowCategories = {
             return 'Flow restricted';
         }
     },
-    // Fallback for any other method names
     'default': {
         icon: '📊',
         label: 'Analysis',
@@ -169,7 +170,8 @@ const flowCategories = {
 // ---------- FETCH DATA ----------
 async function fetchTrafficData() {
     try {
-        const response = await fetch(`${API_BASE}/traffic`);
+        // ✅ FIXED: Use full URL with /api/traffic
+        const response = await fetch(`${API_BASE}/api/traffic`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
         if (data.error) throw new Error(data.error);
@@ -204,7 +206,6 @@ function updateUI(data) {
     elements.statusDescription.textContent = data.description || '';
 
     // ----- BEACON LIGHTS -----
-    // Reset all lights
     elements.redLight.className = 'beacon-light';
     elements.yellowLight.className = 'beacon-light';
     elements.greenLight.className = 'beacon-light';
@@ -252,20 +253,17 @@ function updateUI(data) {
         }
     }
 
-    // Methods & Locations
     renderMethods(data.methods || []);
     renderLocations(data.locations || []);
 }
 
-// ---------- RENDER METHODS (Professional - Hides Raw Percentages) ----------
+// ---------- RENDER METHODS ----------
 function renderMethods(methods) {
     elements.methodsGrid.innerHTML = methods.map(m => {
-        // Get flow category for this method
         const flow = flowCategories[m.method] || flowCategories['default'];
         const status = flow.getStatus(m.probability);
         const description = flow.getDescription(m.probability);
         const confClass = m.confidence?.toLowerCase() || 'medium';
-        const probPercent = (m.probability * 100).toFixed(1);
         
         return `
             <div class="method-card">
@@ -290,11 +288,9 @@ function renderMethods(methods) {
 // ---------- RENDER LOCATIONS ----------
 function renderLocations(locations) {
     elements.locationsGrid.innerHTML = locations.map(l => {
-        const prob = (l.probability * 100).toFixed(1);
         const peak = l.peak_hour ? '🔺 Peak' : '⏳ Off-peak';
         const weekend = l.weekend ? '📅 Weekend' : '📆 Weekday';
         
-        // Flow status for location
         let flowStatus = 'Light';
         if (l.probability < 0.2) flowStatus = 'Clear';
         else if (l.probability < 0.4) flowStatus = 'Light';
@@ -337,6 +333,7 @@ function addGradientDef() {
         const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
         const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
         grad.id = 'grad';
+        grad.setAttribute('x1', '0%');
         grad.setAttribute('x1', '0%');
         grad.setAttribute('y1', '0%');
         grad.setAttribute('x2', '100%');
