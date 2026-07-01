@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🚦 Hosur Traffic Control Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <meta name="creator" content="Shri Muhammed Zabiullah Khan" />
+    <meta name="team" content="@Axion_Z_Squad" />
+</head>
+<body>
+
+    <!-- ===== ANIMATED BACKGROUND - CARS MOVING FORWARD ===== -->
+    <div class="bg-animation">
+        <div class="moving-cars-forward"></div>
+        <div class="moving-cars-forward-2"></div>
+        <div class="moving-cars-forward-3"></div>
+        <div class="road-lines-forward"></div>
+        <div class="glow-overlay"></div>
+    </div>
+
+    <div class="container">
+
+        <!-- ===== HEADER ===== -->
+        <header>
+            <div class="logo">
+                <div class="neon-text">
+                    <h1>🚦 HOSUR TRAFFIC </h1>
+                    <p>HOSUR · REAL-TIME MONITORING</p>
+                </div>
+                <div class="status-led">
+                    <span class="led-dot" id="liveDot"></span>
+                    <span id="liveStatus">LIVE</span>
+                </div>
+            </div>
+            <div class="last-updated">
+                <span>🕐 </span><span id="updateTime">--</span><br />
+                <span class="refresh-tag">⚡ Auto-refresh every 60s</span>
+            </div>
+        </header>
+
+        <!-- ===== STATUS CARD ===== -->
+        <div class="card status-card" id="statusCard">
+            <div class="status-display">
+
+                <!-- BEACON TRAFFIC LIGHT -->
+                <div class="traffic-beacon">
+                    <div class="beacon-light" id="redLight"></div>
+                    <div class="beacon-light" id="yellowLight"></div>
+                    <div class="beacon-light" id="greenLight"></div>
+                    <span class="beacon-label">TRAFFIC</span>
+                </div>
+
+                <div class="status-content">
+                    <!-- PROBABILITY RING -->
+                    <div class="probability-ring">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="50" />
+                            <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="50" />
+                            <text x="60" y="60" class="ring-text" id="probText">0%</text>
+                        </svg>
+                    </div>
+
+                    <div class="status-text">
+                        <h2 id="statusTitle">LOADING...</h2>
+                        <p id="statusDescription">Connecting to SIPCOT Phase-1</p>
+                        <div class="confidence-badge" id="confidenceBadge">
+                            <span>🎯 Confidence: </span>
+                            <span id="confidenceText">--</span>
+                        </div>
+                        <div class="data-freshness">
+                            <span id="dataFreshness">📡 Data: Live</span>
+                            <span id="historyCount">📊 Records: 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== POLLUTANTS ===== -->
+        <div class="card">
+            <h3>📊 AIR QUALITY METRICS</h3>
+            <div class="pollutants-grid" id="pollutantsGrid">
+                <div class="pollutant-item">
+                    <span class="label">NO₂</span>
+                    <span class="value" id="no2Value">--</span>
+                    <span class="unit">µg/m³</span>
+                    <div class="mini-bar"><div class="mini-fill" id="no2Bar" style="width:0%"></div></div>
+                </div>
+                <div class="pollutant-item">
+                    <span class="label">PM2.5</span>
+                    <span class="value" id="pm25Value">--</span>
+                    <span class="unit">µg/m³</span>
+                    <div class="mini-bar"><div class="mini-fill" id="pm25Bar" style="width:0%"></div></div>
+                </div>
+                <div class="pollutant-item">
+                    <span class="label">PM10</span>
+                    <span class="value" id="pm10Value">--</span>
+                    <span class="unit">µg/m³</span>
+                    <div class="mini-bar"><div class="mini-fill" id="pm10Bar" style="width:0%"></div></div>
+                </div>
+                <div class="pollutant-item">
+                    <span class="label">CO</span>
+                    <span class="value" id="coValue">--</span>
+                    <span class="unit">µg/m³</span>
+                    <div class="mini-bar"><div class="mini-fill" id="coBar" style="width:0%"></div></div>
+                </div>
+                <div class="pollutant-item">
+                    <span class="label">🌡️ Temp</span>
+                    <span class="value" id="tempValue">--</span>
+                    <span class="unit">°C</span>
+                </div>
+                <div class="pollutant-item">
+                    <span class="label">💧 Humidity</span>
+                    <span class="value" id="humidValue">--</span>
+                    <span class="unit">%</span>
+                </div>
+                <div class="pollutant-item">
+                    <span class="label">💨 Wind</span>
+                    <span class="value" id="windValue">--</span>
+                    <span class="unit">m/s</span>
+                </div>
+                <div class="pollutant-item">
+                    <span class="label">📊 Pressure</span>
+                    <span class="value" id="pressureValue">--</span>
+                    <span class="unit">hPa</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== METHODS ===== -->
+        <div class="card">
+            <h3>🧪 METHOD ANALYSIS</h3>
+            <div class="methods-grid" id="methodsGrid"></div>
+        </div>
+
+        <!-- ===== LOCATIONS ===== -->
+        <div class="card">
+            <h3>📍 LOCATION FORECAST</h3>
+            <div class="locations-grid" id="locationsGrid"></div>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <footer>
+            <p>🚦 Hosur Traffic Control Center v3.1</p>
+            <p>👤 Shri Muhammed Zabiullah Khan @Axion_Z_Squad</p>
+            <p>📡 Data: SIPCOT Phase-1 · CPCB</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
