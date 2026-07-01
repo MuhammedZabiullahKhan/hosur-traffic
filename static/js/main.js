@@ -3,7 +3,7 @@
 // Created by Shri Muhammed Zabiullah Khan @Axion_Z_Squad
 // ============================================================
 
-const API_BASE = 'https://hosur-traffic.onrender.com';
+const API_BASE = 'https://hosur-traffic.onrender.com/api';
 let currentData = null;
 let updateInterval = null;
 let audioCtx = null;
