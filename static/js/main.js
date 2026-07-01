@@ -3,7 +3,7 @@
 // Created by Shri Muhammed Zabiullah Khan @Axion_Z_Squad
 // ============================================================
 
-// ✅ FIXED: Use your Render backend URL
+// ✅ CORRECT: Use your Render backend URL
 const API_BASE = 'https://hosur-traffic.onrender.com';
 
 let currentData = null;
@@ -170,7 +170,7 @@ const flowCategories = {
 // ---------- FETCH DATA ----------
 async function fetchTrafficData() {
     try {
-        // ✅ FIXED: Use full URL with /api/traffic
+        // ✅ CORRECT: Use /api/traffic endpoint
         const response = await fetch(`${API_BASE}/api/traffic`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
@@ -333,7 +333,6 @@ function addGradientDef() {
         const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
         const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
         grad.id = 'grad';
-        grad.setAttribute('x1', '0%');
         grad.setAttribute('x1', '0%');
         grad.setAttribute('y1', '0%');
         grad.setAttribute('x2', '100%');
