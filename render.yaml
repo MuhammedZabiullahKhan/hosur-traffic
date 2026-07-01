@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: hosur-traffic-api
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: gunicorn app:app --timeout 120 --workers 2 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: AQI_API_TOKEN
+        value: bd175968d7b797e5b2152c4291a1b498a786e26b
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.11.15
+      - key: PYTHONUNBUFFERED
+        value: true
